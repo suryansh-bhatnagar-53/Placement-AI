@@ -68,8 +68,14 @@ function Onboarding() {
   }
 
   async function submit() {
-    if (name.trim().length === 0) return toast.error("Enter your name");
-    if (languages.length === 0) return toast.error("Pick at least one language");
+    if (name.trim().length === 0) {
+      toast.error("Enter your name");
+      return;
+    }
+    if (languages.length === 0) {
+      toast.error("Pick at least one language");
+      return;
+    }
     setBusy(true);
     try {
       await save({
