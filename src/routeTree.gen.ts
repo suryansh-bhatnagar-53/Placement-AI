@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as GuideRouteImport } from './routes/guide'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PerformanceRouteImport } from './routes/performance'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as InterviewSetupRouteImport } from './routes/interview/setup'
+import { Route as InterviewReportIdRouteImport } from './routes/interview/report.$id'
+import { Route as InterviewSessionIdRouteImport } from './routes/interview/session.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuideRoute = GuideRouteImport.update({
+  id: '/guide',
+  path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerformanceRoute = PerformanceRouteImport.update({
+  id: '/performance',
+  path: '/performance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewSetupRoute = InterviewSetupRouteImport.update({
+  id: '/interview/setup',
+  path: '/interview/setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewReportIdRoute = InterviewReportIdRouteImport.update({
+  id: '/interview/report/$id',
+  path: '/interview/report/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewSessionIdRoute = InterviewSessionIdRouteImport.update({
+  id: '/interview/session/$id',
+  path: '/interview/session/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/guide': typeof GuideRoute
+  '/onboarding': typeof OnboardingRoute
+  '/performance': typeof PerformanceRoute
+  '/resume': typeof ResumeRoute
+  '/interview/setup': typeof InterviewSetupRoute
+  '/interview/report/$id': typeof InterviewReportIdRoute
+  '/interview/session/$id': typeof InterviewSessionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/guide': typeof GuideRoute
+  '/onboarding': typeof OnboardingRoute
+  '/performance': typeof PerformanceRoute
+  '/resume': typeof ResumeRoute
+  '/interview/setup': typeof InterviewSetupRoute
+  '/interview/report/$id': typeof InterviewReportIdRoute
+  '/interview/session/$id': typeof InterviewSessionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/guide': typeof GuideRoute
+  '/onboarding': typeof OnboardingRoute
+  '/performance': typeof PerformanceRoute
+  '/resume': typeof ResumeRoute
+  '/interview/setup': typeof InterviewSetupRoute
+  '/interview/report/$id': typeof InterviewReportIdRoute
+  '/interview/session/$id': typeof InterviewSessionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/guide'
+    | '/onboarding'
+    | '/performance'
+    | '/resume'
+    | '/interview/setup'
+    | '/interview/report/$id'
+    | '/interview/session/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/guide'
+    | '/onboarding'
+    | '/performance'
+    | '/resume'
+    | '/interview/setup'
+    | '/interview/report/$id'
+    | '/interview/session/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/guide'
+    | '/onboarding'
+    | '/performance'
+    | '/resume'
+    | '/interview/setup'
+    | '/interview/report/$id'
+    | '/interview/session/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  DashboardRoute: typeof DashboardRoute
+  GuideRoute: typeof GuideRoute
+  OnboardingRoute: typeof OnboardingRoute
+  PerformanceRoute: typeof PerformanceRoute
+  ResumeRoute: typeof ResumeRoute
+  InterviewSetupRoute: typeof InterviewSetupRoute
+  InterviewReportIdRoute: typeof InterviewReportIdRoute
+  InterviewSessionIdRoute: typeof InterviewSessionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guide': {
+      id: '/guide'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/performance': {
+      id: '/performance'
+      path: '/performance'
+      fullPath: '/performance'
+      preLoaderRoute: typeof PerformanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interview/setup': {
+      id: '/interview/setup'
+      path: '/interview/setup'
+      fullPath: '/interview/setup'
+      preLoaderRoute: typeof InterviewSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interview/report/$id': {
+      id: '/interview/report/$id'
+      path: '/interview/report/$id'
+      fullPath: '/interview/report/$id'
+      preLoaderRoute: typeof InterviewReportIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interview/session/$id': {
+      id: '/interview/session/$id'
+      path: '/interview/session/$id'
+      fullPath: '/interview/session/$id'
+      preLoaderRoute: typeof InterviewSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  DashboardRoute: DashboardRoute,
+  GuideRoute: GuideRoute,
+  OnboardingRoute: OnboardingRoute,
+  PerformanceRoute: PerformanceRoute,
+  ResumeRoute: ResumeRoute,
+  InterviewSetupRoute: InterviewSetupRoute,
+  InterviewReportIdRoute: InterviewReportIdRoute,
+  InterviewSessionIdRoute: InterviewSessionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
