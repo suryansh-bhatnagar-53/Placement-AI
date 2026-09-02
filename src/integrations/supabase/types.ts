@@ -245,6 +245,48 @@ export type Database = {
         }
         Relationships: []
       }
+      roadmap_items: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          practice_question_ids: Json
+          priority: number
+          resources: Json
+          role: string
+          status: string
+          title: string
+          topic: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          practice_question_ids?: Json
+          priority?: number
+          resources?: Json
+          role: string
+          status?: string
+          title: string
+          topic: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          practice_question_ids?: Json
+          priority?: number
+          resources?: Json
+          role?: string
+          status?: string
+          title?: string
+          topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       roadmaps: {
         Row: {
           created_at: string
