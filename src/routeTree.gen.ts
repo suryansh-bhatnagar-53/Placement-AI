@@ -16,6 +16,7 @@ import { Route as GuideRouteImport } from './routes/guide'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as InterviewSetupRouteImport } from './routes/interview/setup'
 import { Route as InterviewReportIdRouteImport } from './routes/interview/report.$id'
 import { Route as InterviewSessionIdRouteImport } from './routes/interview/session.$id'
@@ -55,6 +56,11 @@ const ResumeRoute = ResumeRouteImport.update({
   path: '/resume',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InterviewSetupRoute = InterviewSetupRouteImport.update({
   id: '/interview/setup',
   path: '/interview/setup',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
   '/interview/setup': typeof InterviewSetupRoute
   '/interview/report/$id': typeof InterviewReportIdRoute
   '/interview/session/$id': typeof InterviewSessionIdRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
   '/interview/setup': typeof InterviewSetupRoute
   '/interview/report/$id': typeof InterviewReportIdRoute
   '/interview/session/$id': typeof InterviewSessionIdRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
   '/interview/setup': typeof InterviewSetupRoute
   '/interview/report/$id': typeof InterviewReportIdRoute
   '/interview/session/$id': typeof InterviewSessionIdRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/performance'
     | '/resume'
+    | '/roadmap'
     | '/interview/setup'
     | '/interview/report/$id'
     | '/interview/session/$id'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/performance'
     | '/resume'
+    | '/roadmap'
     | '/interview/setup'
     | '/interview/report/$id'
     | '/interview/session/$id'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/performance'
     | '/resume'
+    | '/roadmap'
     | '/interview/setup'
     | '/interview/report/$id'
     | '/interview/session/$id'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PerformanceRoute: typeof PerformanceRoute
   ResumeRoute: typeof ResumeRoute
+  RoadmapRoute: typeof RoadmapRoute
   InterviewSetupRoute: typeof InterviewSetupRoute
   InterviewReportIdRoute: typeof InterviewReportIdRoute
   InterviewSessionIdRoute: typeof InterviewSessionIdRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResumeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/interview/setup': {
       id: '/interview/setup'
       path: '/interview/setup'
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PerformanceRoute: PerformanceRoute,
   ResumeRoute: ResumeRoute,
+  RoadmapRoute: RoadmapRoute,
   InterviewSetupRoute: InterviewSetupRoute,
   InterviewReportIdRoute: InterviewReportIdRoute,
   InterviewSessionIdRoute: InterviewSessionIdRoute,
