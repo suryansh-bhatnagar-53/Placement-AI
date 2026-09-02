@@ -1,7 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-import { chat } from "./ai.server";
+import { chatWithFinish } from "./ai.server";
+import { generateCompleteReply } from "./guide-completion";
 import { buildGuideContext, checkRateLimit, GUIDE_SYSTEM_PROMPT } from "./guide.server";
 
 export const getGuideHistory = createServerFn({ method: "GET" })
