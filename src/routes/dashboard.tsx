@@ -33,7 +33,10 @@ const CARDS = [
   { to: "/resume", icon: FileText, title: "Get Resume Check", body: "Upload a PDF and get an ATS score with fixes." },
   { to: "/guide", icon: Bot, title: "Talk with AI Guide", body: "Ask anything about prep, resumes or careers." },
   { to: "/performance", icon: BarChart3, title: "Performance Dashboard", body: "Track readiness, sub-scores and history." },
+  { to: "/roadmap", icon: Map, title: "My Roadmap", body: "A ranked plan built from your weakest topics." },
+  { to: "/cheatsheet", icon: BookOpen, title: "General Cheat Sheet", body: "Core topics, real problems and a 4-week plan." },
 ] as const;
+
 
 function Dashboard() {
   const load = useServerFn(getDashboardSummary);
