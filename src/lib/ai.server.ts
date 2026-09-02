@@ -57,8 +57,67 @@ export async function chat(
     throw new AiUnavailableError(message || "The AI service failed.", res.status);
   }
 
-  const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
+  const data = (await res.json()) as {
+    choices?: Array<{ message?: { content?: string }; finish_reason?: string }>;
+  };
   return data.choices?.[0]?.message?.content ?? "";
+}
+
+export type ChatResult = { content: string; finishReason: string };
+
+/**
+ * Same call as `chat`, but also returns the provider's `finish_reason` so callers can
+ * detect `"length"` truncation and continue the generation.
+ */
+export async function chatWithFinish(
+  messages: ChatMessage[],
+  options: { model?: string; maxTokens?: number } = {},
+): Promise<ChatResult> {
+  const apiKey = process.env["LOVABLE_API_KEY"];
+  if (!apiKey) throw new AiUnavailableError("AI is not configured for this app.", 500);
+
+  const res = await fetch(GATEWAY_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Lovable-API-Key": apiKey,
+      "X-Lovable-AIG-SDK": "fetch",
+    },
+    body: JSON.stringify({
+      model: options.model ?? DEFAULT_MODEL,
+      messages,
+      ...(options.maxTokens ? { max_tokens: options.maxTokens } : {}),
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    let message = body;
+    try {
+      const parsed = JSON.parse(body) as { error?: { message?: string }; message?: string };
+      message = parsed.error?.message ?? parsed.message ?? body;
+    } catch {
+      // keep raw body
+    }
+    if (res.status === 429) {
+      throw new AiUnavailableError("The AI is busy right now. Please try again in a moment.", 429);
+    }
+    if (res.status === 402) {
+      throw new AiUnavailableError(
+        message || "AI credits are exhausted. Add credits to keep using AI features.",
+        402,
+      );
+    }
+    throw new AiUnavailableError(message || "The AI service failed.", res.status);
+  }
+
+  const data = (await res.json()) as {
+    choices?: Array<{ message?: { content?: string }; finish_reason?: string }>;
+  };
+  return {
+    content: data.choices?.[0]?.message?.content ?? "",
+    finishReason: data.choices?.[0]?.finish_reason ?? "stop",
+  };
 }
 
 /** Strips markdown fences and parses the first JSON object found. Returns null on failure. */
