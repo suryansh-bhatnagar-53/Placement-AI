@@ -11,11 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CheatsheetRouteImport } from './routes/cheatsheet'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as InterviewSetupRouteImport } from './routes/interview/setup'
 import { Route as InterviewReportIdRouteImport } from './routes/interview/report.$id'
 import { Route as InterviewSessionIdRouteImport } from './routes/interview/session.$id'
@@ -28,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheatsheetRoute = CheatsheetRouteImport.update({
+  id: '/cheatsheet',
+  path: '/cheatsheet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -55,6 +62,11 @@ const ResumeRoute = ResumeRouteImport.update({
   path: '/resume',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InterviewSetupRoute = InterviewSetupRouteImport.update({
   id: '/interview/setup',
   path: '/interview/setup',
@@ -74,11 +86,13 @@ const InterviewSessionIdRoute = InterviewSessionIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
   '/interview/setup': typeof InterviewSetupRoute
   '/interview/report/$id': typeof InterviewReportIdRoute
   '/interview/session/$id': typeof InterviewSessionIdRoute
@@ -86,11 +100,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
   '/interview/setup': typeof InterviewSetupRoute
   '/interview/report/$id': typeof InterviewReportIdRoute
   '/interview/session/$id': typeof InterviewSessionIdRoute
@@ -99,11 +115,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRoute
   '/interview/setup': typeof InterviewSetupRoute
   '/interview/report/$id': typeof InterviewReportIdRoute
   '/interview/session/$id': typeof InterviewSessionIdRoute
@@ -113,11 +131,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/cheatsheet'
     | '/dashboard'
     | '/guide'
     | '/onboarding'
     | '/performance'
     | '/resume'
+    | '/roadmap'
     | '/interview/setup'
     | '/interview/report/$id'
     | '/interview/session/$id'
@@ -125,11 +145,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/cheatsheet'
     | '/dashboard'
     | '/guide'
     | '/onboarding'
     | '/performance'
     | '/resume'
+    | '/roadmap'
     | '/interview/setup'
     | '/interview/report/$id'
     | '/interview/session/$id'
@@ -137,11 +159,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/cheatsheet'
     | '/dashboard'
     | '/guide'
     | '/onboarding'
     | '/performance'
     | '/resume'
+    | '/roadmap'
     | '/interview/setup'
     | '/interview/report/$id'
     | '/interview/session/$id'
@@ -150,11 +174,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  CheatsheetRoute: typeof CheatsheetRoute
   DashboardRoute: typeof DashboardRoute
   GuideRoute: typeof GuideRoute
   OnboardingRoute: typeof OnboardingRoute
   PerformanceRoute: typeof PerformanceRoute
   ResumeRoute: typeof ResumeRoute
+  RoadmapRoute: typeof RoadmapRoute
   InterviewSetupRoute: typeof InterviewSetupRoute
   InterviewReportIdRoute: typeof InterviewReportIdRoute
   InterviewSessionIdRoute: typeof InterviewSessionIdRoute
@@ -174,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cheatsheet': {
+      id: '/cheatsheet'
+      path: '/cheatsheet'
+      fullPath: '/cheatsheet'
+      preLoaderRoute: typeof CheatsheetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -211,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResumeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/interview/setup': {
       id: '/interview/setup'
       path: '/interview/setup'
@@ -238,11 +278,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  CheatsheetRoute: CheatsheetRoute,
   DashboardRoute: DashboardRoute,
   GuideRoute: GuideRoute,
   OnboardingRoute: OnboardingRoute,
   PerformanceRoute: PerformanceRoute,
   ResumeRoute: ResumeRoute,
+  RoadmapRoute: RoadmapRoute,
   InterviewSetupRoute: InterviewSetupRoute,
   InterviewReportIdRoute: InterviewReportIdRoute,
   InterviewSessionIdRoute: InterviewSessionIdRoute,

@@ -1,7 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-import { chat } from "./ai.server";
+import { chatWithFinish } from "./ai.server";
+import { generateCompleteReply } from "./guide-completion";
 import { buildGuideContext, checkRateLimit, GUIDE_SYSTEM_PROMPT } from "./guide.server";
 
 export const getGuideHistory = createServerFn({ method: "GET" })
@@ -41,19 +42,31 @@ export const sendGuideMessage = createServerFn({ method: "POST" })
       .from("chat_messages")
       .insert({ user_id: context.userId, role: "user", content: data.message });
 
-    const reply = await chat(
-      [
-        {
-          role: "system" as const,
-          content: `${GUIDE_SYSTEM_PROMPT}\n\nLearner context:\n${contextBlock.summary}`,
-        },
-        ...contextBlock.recentMessages,
-        { role: "user" as const, content: data.message },
-      ],
-      { maxTokens: 500 },
-    );
+    const base = [
+      {
+        role: "system" as const,
+        content: `${GUIDE_SYSTEM_PROMPT}\n\nLearner context:\n${contextBlock.summary}`,
+      },
+      ...contextBlock.recentMessages,
+      { role: "user" as const, content: data.message },
+    ];
 
-    const content = reply.trim() || "I could not produce an answer just now. Try rephrasing.";
+    const content = await generateCompleteReply(async (continuationOf) =>
+      chatWithFinish(
+        continuationOf
+          ? [
+              ...base,
+              { role: "assistant" as const, content: continuationOf },
+              {
+                role: "user" as const,
+                content:
+                  "Continue your previous answer from exactly where it stopped. Do not repeat text already written, and finish the final sentence.",
+              },
+            ]
+          : base,
+        { maxTokens: 900 },
+      ),
+    );
     await context.supabase
       .from("chat_messages")
       .insert({ user_id: context.userId, role: "assistant", content });
