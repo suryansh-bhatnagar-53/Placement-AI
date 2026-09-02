@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CheatsheetRouteImport } from './routes/cheatsheet'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -29,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheatsheetRoute = CheatsheetRouteImport.update({
+  id: '/cheatsheet',
+  path: '/cheatsheet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -80,6 +86,7 @@ const InterviewSessionIdRoute = InterviewSessionIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
   '/onboarding': typeof OnboardingRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
   '/onboarding': typeof OnboardingRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
   '/onboarding': typeof OnboardingRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/cheatsheet'
     | '/dashboard'
     | '/guide'
     | '/onboarding'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/cheatsheet'
     | '/dashboard'
     | '/guide'
     | '/onboarding'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/cheatsheet'
     | '/dashboard'
     | '/guide'
     | '/onboarding'
@@ -162,6 +174,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  CheatsheetRoute: typeof CheatsheetRoute
   DashboardRoute: typeof DashboardRoute
   GuideRoute: typeof GuideRoute
   OnboardingRoute: typeof OnboardingRoute
@@ -187,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cheatsheet': {
+      id: '/cheatsheet'
+      path: '/cheatsheet'
+      fullPath: '/cheatsheet'
+      preLoaderRoute: typeof CheatsheetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -258,6 +278,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  CheatsheetRoute: CheatsheetRoute,
   DashboardRoute: DashboardRoute,
   GuideRoute: GuideRoute,
   OnboardingRoute: OnboardingRoute,
