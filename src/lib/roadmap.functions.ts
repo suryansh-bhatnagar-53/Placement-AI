@@ -125,9 +125,9 @@ export const getRoadmap = createServerFn({ method: "GET" })
       supabase.from("profiles").select("target_role").eq("id", context.userId).maybeSingle(),
       supabase
         .from("sessions")
-        .select("id, finished_at")
+        .select("id, ended_at")
         .eq("status", "completed")
-        .order("finished_at", { ascending: false })
+        .order("ended_at", { ascending: false })
         .limit(1)
         .maybeSingle(),
     ]);
@@ -141,8 +141,8 @@ export const getRoadmap = createServerFn({ method: "GET" })
     const generatedAt = rows[0]?.created_at ?? null;
     const staleResults = Boolean(
       generatedAt &&
-        lastSession.data?.finished_at &&
-        new Date(lastSession.data.finished_at) > new Date(generatedAt),
+        lastSession.data?.ended_at &&
+        new Date(lastSession.data.ended_at) > new Date(generatedAt),
     );
 
     return {
