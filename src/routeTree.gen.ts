@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CheatsheetRouteImport } from './routes/cheatsheet'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GuideRouteImport } from './routes/guide'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as ResumeRouteImport } from './routes/resume'
@@ -45,6 +46,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const GuideRoute = GuideRouteImport.update({
   id: '/guide',
   path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
+  '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
+  '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
+  '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
   '/resume': typeof ResumeRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/cheatsheet'
     | '/dashboard'
     | '/guide'
+    | '/how-it-works'
     | '/onboarding'
     | '/performance'
     | '/resume'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/cheatsheet'
     | '/dashboard'
     | '/guide'
+    | '/how-it-works'
     | '/onboarding'
     | '/performance'
     | '/resume'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/cheatsheet'
     | '/dashboard'
     | '/guide'
+    | '/how-it-works'
     | '/onboarding'
     | '/performance'
     | '/resume'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   CheatsheetRoute: typeof CheatsheetRoute
   DashboardRoute: typeof DashboardRoute
   GuideRoute: typeof GuideRoute
+  HowItWorksRoute: typeof HowItWorksRoute
   OnboardingRoute: typeof OnboardingRoute
   PerformanceRoute: typeof PerformanceRoute
   ResumeRoute: typeof ResumeRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/guide'
       fullPath: '/guide'
       preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheatsheetRoute: CheatsheetRoute,
   DashboardRoute: DashboardRoute,
   GuideRoute: GuideRoute,
+  HowItWorksRoute: HowItWorksRoute,
   OnboardingRoute: OnboardingRoute,
   PerformanceRoute: PerformanceRoute,
   ResumeRoute: ResumeRoute,
