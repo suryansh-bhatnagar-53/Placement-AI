@@ -100,3 +100,9 @@ Exactly six cards, in order: Interview → Resume → AI Guide → Performance �
 6. Performance → readiness trend, sub-scores, per-topic averages, interview history.
 7. Roadmap → prioritised items, tick one to move the progress bar, "Regenerate from my results".
 8. Cheat Sheet → switch role, expand sections, open a real problem link.
+
+## How It Works — Low-Level Architecture (`/how-it-works`)
+
+- Static, frontend-only content in `src/lib/architecture-content.ts` (nodes + edges, one source of truth; zero AI calls, no new endpoints or dependencies).
+- `src/routes/how-it-works.tsx` renders one layered workflow: student → hub → six modules with sub-nodes → combined core engine (AI Gateway, Postgres with RLS, local ATS rules) → feedback loop back to the hub.
+- Every node, sub-node, engine node and arrow is a focusable button; clicking one opens a fixed mini dialog in the bottom-right with a plain-language explanation and close button — the diagram never moves or resizes. Optional legend highlights a single module.
