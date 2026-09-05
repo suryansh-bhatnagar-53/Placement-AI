@@ -106,3 +106,9 @@ Exactly six cards, in order: Interview → Resume → AI Guide → Performance �
 - Static, frontend-only content in `src/lib/architecture-content.ts` (nodes + edges, one source of truth; zero AI calls, no new endpoints or dependencies).
 - `src/routes/how-it-works.tsx` renders one layered workflow: student → hub → six modules with sub-nodes → combined core engine (AI Gateway, Postgres with RLS, local ATS rules) → feedback loop back to the hub.
 - Every node, sub-node, engine node and arrow is a focusable button; clicking one opens a fixed mini dialog in the bottom-right with a plain-language explanation and close button — the diagram never moves or resizes. Optional legend highlights a single module.
+
+## High-Level Architecture — Developer View (`/architecture`)
+
+- Static, frontend-only content in `src/lib/hla-content.ts` (nodes + edges + resilience scenarios; zero AI calls, no new endpoints, tables or dependencies). Deviation: the spec named `architecture-content.ts`, which is already owned by the low-level module, so the new file is `hla-content.ts`.
+- `src/routes/architecture.tsx` renders one connected diagram — client routes → server functions (auth gate, interview, selection, judging, local ATS, guide, roadmap, cheat sheet, performance) → Postgres with row-level security → external AI Gateway (the only external dependency; resume scoring is internal and deterministic) → feedback loop.
+- Every box and arrow is a focusable button opening a fixed mini dialog with 3–6 developer sentences naming real files, functions and tables. Below the diagram, "Common scenarios & how the backend handles them" lists twelve audited failure paths as Trigger → What happens → Handling → User impact. No secrets, keys or hostnames appear anywhere.
