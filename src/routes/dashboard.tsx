@@ -36,7 +36,9 @@ const CARDS = [
   { to: "/roadmap", icon: Map, title: "My Roadmap", body: "A ranked plan built from your weakest topics." },
   { to: "/cheatsheet", icon: BookOpen, title: "General Cheat Sheet", body: "Core topics, real problems and a 4-week plan." },
   { to: "/how-it-works", icon: Compass, title: "How It Works (Low-Level Architecture)", body: "An interactive map of how every part connects." },
+  { to: "/architecture", icon: Network, title: "High-Level Architecture (Developer View)", body: "The real data flow, tables and failure handling." },
 ] as const;
+
 
 
 function Dashboard() {
