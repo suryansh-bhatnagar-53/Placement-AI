@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/AppShell";
 import { StatCard } from "@/components/StatCard";
 import { getDashboardSummary } from "@/lib/dashboard.functions";
-import { Mic, FileText, Bot, BarChart3, AlertTriangle, Map, BookOpen, Compass } from "lucide-react";
+import { Mic, FileText, Bot, BarChart3, AlertTriangle, Map, BookOpen, Compass, Network } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
