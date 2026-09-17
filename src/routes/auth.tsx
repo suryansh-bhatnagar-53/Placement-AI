@@ -34,7 +34,7 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (!loading && session) navigate({ to: "/dashboard" });
+    if (!loading && session) navigate({ to: "/onboarding" });
   }, [loading, session, navigate]);
 
   const isRegister = mode === "register";
@@ -71,7 +71,7 @@ function AuthPage() {
         });
         if (error) throw error;
       }
-      navigate({ to: "/dashboard" });
+      navigate({ to: "/onboarding" });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Something went wrong");
     } finally {
