@@ -89,7 +89,7 @@ function Onboarding() {
     if (profile.target_role) setRole(profile.target_role as "SE" | "ML" | "DA");
     const stored = profile.preferred_languages as string[] | null;
     if (stored && stored.length > 0) setLanguages(stored);
-  }, [profile]);
+  }, [profile, navigate]);
 
   const stats = useMemo(() => computeStats(answers), [answers]);
   const archetype = useMemo(() => computeArchetype(answers), [answers]);
