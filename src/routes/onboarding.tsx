@@ -186,7 +186,10 @@ function Onboarding() {
               value={basics.name}
               onChange={(v) => setBasics({ ...basics, name: v })}
               onNext={() => {
-                if (basics.name.trim().length === 0) return toast.error("Enter your name");
+                if (basics.name.trim().length === 0) {
+                  toast.error("Enter your name");
+                  return;
+                }
                 next();
               }}
             />
@@ -291,7 +294,10 @@ function Onboarding() {
               </div>
               <button
                 onClick={() => {
-                  if (languages.length === 0) return toast.error("Pick at least one language");
+                  if (languages.length === 0) {
+                    toast.error("Pick at least one language");
+                    return;
+                  }
                   next();
                 }}
                 className="mt-8 rounded-md bg-primary px-6 py-2.5 font-medium text-primary-foreground hover:opacity-90"
