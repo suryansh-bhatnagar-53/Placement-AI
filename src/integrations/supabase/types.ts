@@ -181,25 +181,55 @@ export type Database = {
       }
       profiles: {
         Row: {
+          archetype: string | null
+          college: string | null
+          course: string | null
           created_at: string
+          gender: string | null
           id: string
           name: string
+          onboarded_at: string | null
+          personality_answers: Json
           preferred_languages: Json
+          stat_adaptability: number
+          stat_focus: number
+          stat_resilience: number
           target_role: string | null
+          year_of_study: string | null
         }
         Insert: {
+          archetype?: string | null
+          college?: string | null
+          course?: string | null
           created_at?: string
+          gender?: string | null
           id: string
           name?: string
+          onboarded_at?: string | null
+          personality_answers?: Json
           preferred_languages?: Json
+          stat_adaptability?: number
+          stat_focus?: number
+          stat_resilience?: number
           target_role?: string | null
+          year_of_study?: string | null
         }
         Update: {
+          archetype?: string | null
+          college?: string | null
+          course?: string | null
           created_at?: string
+          gender?: string | null
           id?: string
           name?: string
+          onboarded_at?: string | null
+          personality_answers?: Json
           preferred_languages?: Json
+          stat_adaptability?: number
+          stat_focus?: number
+          stat_resilience?: number
           target_role?: string | null
+          year_of_study?: string | null
         }
         Relationships: []
       }
