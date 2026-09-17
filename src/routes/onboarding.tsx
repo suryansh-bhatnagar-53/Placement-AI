@@ -74,6 +74,10 @@ function Onboarding() {
 
   useEffect(() => {
     if (!profile) return;
+    if (profile.onboarded_at) {
+      navigate({ to: "/dashboard" });
+      return;
+    }
     setBasics((prev) => ({
       ...prev,
       name: prev.name || (profile.name ?? ""),
