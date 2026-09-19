@@ -27,7 +27,7 @@ export const setTourState = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => TourStateSchema.parse(input))
   .handler(async ({ data, context }) => {
-    const patch: Record<string, boolean> = {};
+    const patch: { tour_prompted?: boolean; tour_completed?: boolean } = {};
     if (data.tour_prompted !== undefined) patch.tour_prompted = data.tour_prompted;
     if (data.tour_completed !== undefined) patch.tour_completed = data.tour_completed;
     if (Object.keys(patch).length === 0) return { ok: true };
