@@ -13,6 +13,7 @@ export function TourLauncher() {
   const save = useServerFn(setTourState);
   const { data } = useQuery({ queryKey: ["tour-state"], queryFn: () => load() });
   const [mode, setMode] = useState<"none" | "dialog" | "bulb">("none");
+  const [prompted, setPrompted] = useState(false);
 
   useEffect(() => {
     if (!data || data.tour_completed) {
@@ -23,10 +24,12 @@ export function TourLauncher() {
       setMode("dialog");
       return;
     }
+    setPrompted(true);
     const hidden =
       typeof window !== "undefined" && window.localStorage.getItem(BULB_HIDDEN_KEY) === "1";
     setMode(hidden ? "none" : "bulb");
   }, [data]);
+
 
   if (mode === "none") return null;
 
