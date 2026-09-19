@@ -103,6 +103,8 @@ function Dashboard() {
           </Link>
         ))}
       </div>
+
+      <TourLauncher />
     </div>
   );
 }
