@@ -195,6 +195,8 @@ export type Database = {
           stat_focus: number
           stat_resilience: number
           target_role: string | null
+          tour_completed: boolean
+          tour_prompted: boolean
           year_of_study: string | null
         }
         Insert: {
@@ -212,6 +214,8 @@ export type Database = {
           stat_focus?: number
           stat_resilience?: number
           target_role?: string | null
+          tour_completed?: boolean
+          tour_prompted?: boolean
           year_of_study?: string | null
         }
         Update: {
@@ -229,6 +233,8 @@ export type Database = {
           stat_focus?: number
           stat_resilience?: number
           target_role?: string | null
+          tour_completed?: boolean
+          tour_prompted?: boolean
           year_of_study?: string | null
         }
         Relationships: []
