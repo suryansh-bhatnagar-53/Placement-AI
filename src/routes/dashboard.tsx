@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/AppShell";
 import { StatCard } from "@/components/StatCard";
+import { TourLauncher } from "@/components/TourLauncher";
 import { getDashboardSummary } from "@/lib/dashboard.functions";
 import { Mic, FileText, Bot, BarChart3, AlertTriangle, Map, BookOpen, Compass, Network } from "lucide-react";
 
