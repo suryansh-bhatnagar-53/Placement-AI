@@ -89,9 +89,9 @@ export function TourLauncher() {
         <button
           type="button"
           onClick={() => {
-            const wasFirstTime = data ? !data.tour_prompted : true;
             void save({ data: { tour_prompted: true } });
-            if (wasFirstTime) {
+            if (!prompted) {
+              setPrompted(true);
               setMode("bulb");
             } else {
               if (typeof window !== "undefined")
