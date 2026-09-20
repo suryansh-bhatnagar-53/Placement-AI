@@ -5,8 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getTourState, setTourState } from "@/lib/tour.functions";
 import { Lightbulb, X } from "lucide-react";
 
-const BULB_HIDDEN_KEY = "placementai.tour.bulbHidden";
-
 export function TourLauncher() {
   const navigate = useNavigate();
   const load = useServerFn(getTourState);
@@ -16,18 +14,13 @@ export function TourLauncher() {
   const [prompted, setPrompted] = useState(false);
 
   useEffect(() => {
-    if (!data || data.tour_completed) {
-      setMode("none");
-      return;
-    }
+    if (!data) return;
     if (!data.tour_prompted) {
       setMode("dialog");
       return;
     }
     setPrompted(true);
-    const hidden =
-      typeof window !== "undefined" && window.localStorage.getItem(BULB_HIDDEN_KEY) === "1";
-    setMode(hidden ? "none" : "bulb");
+    setMode("bulb");
   }, [data]);
 
 
@@ -78,7 +71,6 @@ export function TourLauncher() {
         <button
           type="button"
           onClick={async () => {
-            if (typeof window !== "undefined") window.localStorage.removeItem(BULB_HIDDEN_KEY);
             await save({ data: { tour_prompted: true } });
             navigate({ to: "/tour" });
           }}
@@ -90,14 +82,8 @@ export function TourLauncher() {
           type="button"
           onClick={() => {
             void save({ data: { tour_prompted: true } });
-            if (!prompted) {
-              setPrompted(true);
-              setMode("bulb");
-            } else {
-              if (typeof window !== "undefined")
-                window.localStorage.setItem(BULB_HIDDEN_KEY, "1");
-              setMode("none");
-            }
+            if (!prompted) setPrompted(true);
+            setMode("bulb");
           }}
           className="rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >

@@ -145,4 +145,117 @@
   .input:focus {
     border-color: var(--color-primary);
   }
+
+  .module-guide-layout {
+    --module-guide-width: 22rem;
+    position: relative;
+    min-height: calc(100vh - 8rem);
+  }
+
+  .module-guide-content {
+    min-width: 0;
+    transition: opacity 225ms ease, transform 225ms ease, width 225ms ease;
+  }
+
+  .module-guide-panel {
+    position: fixed;
+    top: 4.25rem;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    width: var(--module-guide-width);
+    border-left: 1px solid var(--color-border);
+    background: var(--color-card);
+    box-shadow: -12px 0 28px color-mix(in oklch, var(--color-background) 72%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+    transition: opacity 225ms ease, transform 225ms ease;
+  }
+
+  .module-guide-panel-inner {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1.25rem;
+  }
+
+  .module-guide-layout.is-open .module-guide-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .module-guide-layout.is-shift.is-open .module-guide-content {
+    width: calc(100% - var(--module-guide-width));
+    transform: translateX(calc(var(--module-guide-width) / -2));
+  }
+
+  .module-guide-layout.is-fade.is-open .module-guide-content {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .module-guide-edge-toggle {
+    position: fixed;
+    top: 5.25rem;
+    right: 0;
+    z-index: 25;
+    display: inline-flex;
+    height: 2.5rem;
+    width: 1.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-right: 0;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--color-card);
+    color: var(--color-muted-foreground);
+    opacity: 0.65;
+    transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
+  }
+
+  .module-guide-edge-toggle:hover,
+  .module-guide-edge-toggle:focus-visible {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .module-guide-layout.is-open .module-guide-content {
+    visibility: hidden;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: none;
+  }
+
+  .module-guide-panel {
+    top: 0;
+    width: 100%;
+    max-width: none;
+    z-index: 60;
+  }
+
+  .module-guide-panel-inner {
+    padding: 1rem;
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .module-guide-edge-toggle {
+    top: auto;
+    right: 0;
+    bottom: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-guide-content,
+  .module-guide-panel,
+  .module-guide-edge-toggle {
+    transition-duration: 0.01ms;
+  }
 }
