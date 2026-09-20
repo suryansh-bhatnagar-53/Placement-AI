@@ -188,7 +188,6 @@
 
   .module-guide-layout.is-shift.is-open .module-guide-content {
     width: calc(100% - var(--module-guide-width));
-    transform: translateX(calc(var(--module-guide-width) / -2));
   }
 
   .module-guide-layout.is-fade.is-open .module-guide-content {
@@ -215,6 +214,18 @@
     transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
   }
 
+  .module-guide-icon {
+    position: fixed;
+    top: 5.1rem;
+    right: 2.5rem;
+    z-index: 40;
+    transition: right 225ms ease;
+  }
+
+  .module-guide-layout.is-open .module-guide-icon {
+    right: calc(var(--module-guide-width) + 0.75rem);
+  }
+
   .module-guide-edge-toggle:hover,
   .module-guide-edge-toggle:focus-visible {
     border-color: var(--color-primary);
@@ -239,6 +250,10 @@
     z-index: 60;
   }
 
+  .module-guide-layout.is-open .module-guide-icon {
+    right: 3.25rem;
+  }
+
   .module-guide-panel-inner {
     padding: 1rem;
     padding-top: max(1rem, env(safe-area-inset-top));
@@ -255,7 +270,8 @@
 @media (prefers-reduced-motion: reduce) {
   .module-guide-content,
   .module-guide-panel,
-  .module-guide-edge-toggle {
+  .module-guide-edge-toggle,
+  .module-guide-icon {
     transition-duration: 0.01ms;
   }
 }
