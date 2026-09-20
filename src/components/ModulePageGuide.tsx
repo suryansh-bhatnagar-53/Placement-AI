@@ -22,27 +22,26 @@ export function ModulePageGuide({
         aria-hidden={isFade && open ? true : undefined}
         {...(isFade && open ? { inert: true } : {})}
       >
-        <div className="mb-4 flex justify-end">
-          <div className="group relative">
-            <button
-              type="button"
-              aria-label={open ? "Close module guide" : "Open module guide"}
-              aria-expanded={open}
-              aria-controls={`module-guide-${moduleKey}`}
-              onClick={() => setOpen((value) => !value)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground opacity-60 transition-[color,opacity,border-color] duration-200 hover:border-primary hover:text-primary hover:opacity-100 focus-visible:opacity-100"
-            >
-              <FileQuestion className="h-4 w-4" />
-            </button>
-            <span
-              role="tooltip"
-              className="pointer-events-none absolute right-0 top-full z-20 mt-2 w-max max-w-52 rounded-md border border-border bg-popover px-2.5 py-1.5 text-xs text-popover-foreground opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
-            >
-              Need help with this module?
-            </span>
-          </div>
-        </div>
         {children}
+      </div>
+
+      <div className="module-guide-icon group">
+        <button
+          type="button"
+          aria-label={open ? "Close module guide" : "Open module guide"}
+          aria-expanded={open}
+          aria-controls={`module-guide-${moduleKey}`}
+          onClick={() => setOpen((value) => !value)}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground opacity-60 shadow-sm transition-[color,opacity,border-color] duration-200 hover:border-primary hover:text-primary hover:opacity-100 focus-visible:opacity-100"
+        >
+          <FileQuestion className="h-4 w-4" />
+        </button>
+        <span
+          role="tooltip"
+          className="pointer-events-none absolute right-0 top-full mt-2 w-max max-w-52 rounded-md border border-border bg-popover px-2.5 py-1.5 text-xs text-popover-foreground opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+        >
+          Need help with this module?
+        </span>
       </div>
 
       <aside
