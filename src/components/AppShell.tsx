@@ -3,6 +3,8 @@ import { type ReactNode, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { GraduationCap, LogOut } from "lucide-react";
+import { ModulePageGuide } from "@/components/ModulePageGuide";
+import { getModuleGuideKey } from "@/lib/module-guide-content";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard" },
@@ -18,6 +20,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { session, loading } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const moduleGuideKey = getModuleGuideKey(pathname);
 
   useEffect(() => {
     if (!loading && !session) navigate({ to: "/auth", search: { mode: "login" } });
@@ -68,7 +71,15 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        {moduleGuideKey ? (
+          <ModulePageGuide key={moduleGuideKey} moduleKey={moduleGuideKey}>
+            {children}
+          </ModulePageGuide>
+        ) : (
+          children
+        )}
+      </main>
     </div>
   );
 }
