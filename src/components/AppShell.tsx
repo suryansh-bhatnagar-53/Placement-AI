@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { GraduationCap, LogOut } from "lucide-react";
 import { ModulePageGuide } from "@/components/ModulePageGuide";
 import { getModuleGuideKey } from "@/lib/module-guide-content";
+import { ProfileAvatarButton } from "@/components/ProfileAvatarButton";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard" },
