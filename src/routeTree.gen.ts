@@ -18,6 +18,7 @@ import { Route as GuideRouteImport } from './routes/guide'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PerformanceRouteImport } from './routes/performance'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as TourRouteImport } from './routes/tour'
@@ -70,6 +71,11 @@ const PerformanceRoute = PerformanceRouteImport.update({
   path: '/performance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResumeRoute = ResumeRouteImport.update({
   id: '/resume',
   path: '/resume',
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
+  '/profile': typeof ProfileRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/tour': typeof TourRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
+  '/profile': typeof ProfileRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/tour': typeof TourRoute
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/performance': typeof PerformanceRoute
+  '/profile': typeof ProfileRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/tour': typeof TourRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/onboarding'
     | '/performance'
+    | '/profile'
     | '/resume'
     | '/roadmap'
     | '/tour'
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/onboarding'
     | '/performance'
+    | '/profile'
     | '/resume'
     | '/roadmap'
     | '/tour'
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/onboarding'
     | '/performance'
+    | '/profile'
     | '/resume'
     | '/roadmap'
     | '/tour'
@@ -217,6 +229,7 @@ export interface RootRouteChildren {
   HowItWorksRoute: typeof HowItWorksRoute
   OnboardingRoute: typeof OnboardingRoute
   PerformanceRoute: typeof PerformanceRoute
+  ProfileRoute: typeof ProfileRoute
   ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRoute
   TourRoute: typeof TourRoute
@@ -290,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PerformanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resume': {
       id: '/resume'
       path: '/resume'
@@ -345,6 +365,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowItWorksRoute: HowItWorksRoute,
   OnboardingRoute: OnboardingRoute,
   PerformanceRoute: PerformanceRoute,
+  ProfileRoute: ProfileRoute,
   ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRoute,
   TourRoute: TourRoute,
