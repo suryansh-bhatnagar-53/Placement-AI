@@ -61,9 +61,11 @@ export const saveUserProfile = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => DetailsSchema.parse(input))
   .handler(async ({ data, context }) => {
     if (Object.keys(data).length === 0) return { ok: true };
+    const patch = data as Record<string, unknown>;
     const { error } = await context.supabase
       .from("profiles")
-      .update(data)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .update(patch as any)
       .eq("id", context.userId);
     if (error) throw new Error(error.message);
     return { ok: true };
