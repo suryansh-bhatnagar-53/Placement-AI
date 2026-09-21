@@ -60,6 +60,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               );
             })}
           </nav>
+          <ProfileAvatarButton />
           <button
             onClick={async () => {
               await supabase.auth.signOut();
