@@ -181,57 +181,99 @@ export type Database = {
       }
       profiles: {
         Row: {
+          additional_links: Json
+          additional_skills: Json
           archetype: string | null
+          avatar_url: string | null
+          certificates: Json
+          city: string | null
           college: string | null
+          core_subjects: Json
+          country: string | null
           course: string | null
           created_at: string
+          degree: string | null
           gender: string | null
           id: string
+          linkedin_url: string | null
           name: string
           onboarded_at: string | null
           personality_answers: Json
+          phone: string | null
           preferred_languages: Json
+          programming_languages: Json
+          projects: Json
+          specialization: string | null
           stat_adaptability: number
           stat_focus: number
           stat_resilience: number
+          state: string | null
           target_role: string | null
           tour_completed: boolean
           tour_prompted: boolean
           year_of_study: string | null
         }
         Insert: {
+          additional_links?: Json
+          additional_skills?: Json
           archetype?: string | null
+          avatar_url?: string | null
+          certificates?: Json
+          city?: string | null
           college?: string | null
+          core_subjects?: Json
+          country?: string | null
           course?: string | null
           created_at?: string
+          degree?: string | null
           gender?: string | null
           id: string
+          linkedin_url?: string | null
           name?: string
           onboarded_at?: string | null
           personality_answers?: Json
+          phone?: string | null
           preferred_languages?: Json
+          programming_languages?: Json
+          projects?: Json
+          specialization?: string | null
           stat_adaptability?: number
           stat_focus?: number
           stat_resilience?: number
+          state?: string | null
           target_role?: string | null
           tour_completed?: boolean
           tour_prompted?: boolean
           year_of_study?: string | null
         }
         Update: {
+          additional_links?: Json
+          additional_skills?: Json
           archetype?: string | null
+          avatar_url?: string | null
+          certificates?: Json
+          city?: string | null
           college?: string | null
+          core_subjects?: Json
+          country?: string | null
           course?: string | null
           created_at?: string
+          degree?: string | null
           gender?: string | null
           id?: string
+          linkedin_url?: string | null
           name?: string
           onboarded_at?: string | null
           personality_answers?: Json
+          phone?: string | null
           preferred_languages?: Json
+          programming_languages?: Json
+          projects?: Json
+          specialization?: string | null
           stat_adaptability?: number
           stat_focus?: number
           stat_resilience?: number
+          state?: string | null
           target_role?: string | null
           tour_completed?: boolean
           tour_prompted?: boolean
