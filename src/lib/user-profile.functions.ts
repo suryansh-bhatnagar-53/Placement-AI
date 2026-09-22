@@ -57,7 +57,7 @@ function splitCourse(course: string | null): { degree: string; specialization: s
   if (!course) return { degree: "", specialization: "" };
   const parts = course.split(/[,|/–-]/).map((p) => p.trim()).filter(Boolean);
   if (parts.length <= 1) return { degree: course.trim(), specialization: "" };
-  return { degree: parts[0], specialization: parts.slice(1).join(", ") };
+  return { degree: parts[0] ?? "", specialization: parts.slice(1).join(", ") };
 }
 
 export const getUserProfile = createServerFn({ method: "GET" })
@@ -74,31 +74,58 @@ export const getUserProfile = createServerFn({ method: "GET" })
     const email = (context.claims as { email?: string } | null)?.email ?? "";
     if (!row) return { profile: null, email, identity: null };
 
-    // Pre-fill: values still empty in the profile fall back to what onboarding
-    // already saved on the SAME row. Nothing is written until the user saves.
-    const course = (row.course as string | null) ?? null;
-    const fromCourse = splitCourse(course);
-    const prefilledLanguages = (row.preferred_languages as string[] | null)?.map(languageLabel) ?? [];
-
-    const existingLanguages = strList(row.programming_languages);
-    const profile = {
-      ...row,
-      degree: (row.degree as string | null) || fromCourse.degree,
-      specialization: (row.specialization as string | null) || fromCourse.specialization,
-      graduation_year:
-        (row.graduation_year as string | null) ||
-        estimateGraduationYear(row.year_of_study as string | null, row.onboarded_at as string | null),
-      programming_languages:
-        existingLanguages.length > 0 ? existingLanguages : prefilledLanguages,
+    const str = (key: string): string | null => {
+      const v = row[key];
+      return typeof v === "string" ? v : null;
+    };
+    const num = (key: string): number | null => {
+      const v = row[key];
+      return typeof v === "number" ? v : null;
     };
 
-    const answers = (row.personality_answers ?? {}) as Record<string, unknown>;
+    // Pre-fill: values still empty in the profile fall back to what onboarding
+    // already saved on the SAME row. Nothing is written until the user saves.
+    const fromCourse = splitCourse(str("course"));
+    const preferred = strList(row["preferred_languages"]);
+    const existingLanguages = strList(row["programming_languages"]);
+
+    const profile = {
+      id: str("id") ?? "",
+      name: str("name") ?? "",
+      avatar_url: str("avatar_url"),
+      phone: str("phone") ?? "",
+      country: str("country") ?? "",
+      state: str("state") ?? "",
+      city: str("city") ?? "",
+      college: str("college") ?? "",
+      degree: str("degree") || fromCourse.degree,
+      specialization: str("specialization") || fromCourse.specialization,
+      graduation_year:
+        str("graduation_year") ||
+        estimateGraduationYear(str("year_of_study"), str("onboarded_at")),
+      programming_languages:
+        existingLanguages.length > 0 ? existingLanguages : preferred.map(languageLabel),
+      core_subjects: strList(row["core_subjects"]),
+      additional_skills: strList(row["additional_skills"]),
+      certificates: strList(row["certificates"]),
+      projects: Array.isArray(row["projects"]) ? (row["projects"] as unknown[]) : [],
+      linkedin_url: str("linkedin_url") ?? "",
+      additional_links: Array.isArray(row["additional_links"])
+        ? (row["additional_links"] as unknown[])
+        : [],
+      target_role: str("target_role") ?? "",
+      preferred_languages: preferred,
+      course: str("course") ?? "",
+      year_of_study: str("year_of_study") ?? "",
+    };
+
+    const answers = (row["personality_answers"] ?? {}) as Record<string, unknown>;
     const identity = {
-      archetype: (row.archetype as string | null) || DEFAULT_ARCHETYPE,
-      adaptability: (row.stat_adaptability as number | null) ?? 50,
-      resilience: (row.stat_resilience as number | null) ?? 50,
-      focus: (row.stat_focus as number | null) ?? 50,
-      complete: Boolean(row.archetype) && Object.keys(answers).length > 0,
+      archetype: str("archetype") || DEFAULT_ARCHETYPE,
+      adaptability: num("stat_adaptability") ?? 50,
+      resilience: num("stat_resilience") ?? 50,
+      focus: num("stat_focus") ?? 50,
+      complete: Boolean(str("archetype")) && Object.keys(answers).length > 0,
     };
 
     return { profile, email, identity };
