@@ -122,12 +122,14 @@ export const getUserProfile = createServerFn({ method: "GET" })
     };
 
     const answers = (row["personality_answers"] ?? {}) as Record<string, unknown>;
+    // Skipped or unfinished onboarding keeps the default badge + neutral stats.
+    const complete = Boolean(str("archetype")) && Object.keys(answers).length > 0;
     const identity = {
-      archetype: str("archetype") || DEFAULT_ARCHETYPE,
-      adaptability: num("stat_adaptability") ?? 50,
-      resilience: num("stat_resilience") ?? 50,
-      focus: num("stat_focus") ?? 50,
-      complete: Boolean(str("archetype")) && Object.keys(answers).length > 0,
+      archetype: complete ? (str("archetype") as string) : DEFAULT_ARCHETYPE,
+      adaptability: complete ? (num("stat_adaptability") ?? 50) : 50,
+      resilience: complete ? (num("stat_resilience") ?? 50) : 50,
+      focus: complete ? (num("stat_focus") ?? 50) : 50,
+      complete,
     };
 
     return { profile, email, identity };
