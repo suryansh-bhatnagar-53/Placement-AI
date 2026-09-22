@@ -108,11 +108,13 @@ export const getUserProfile = createServerFn({ method: "GET" })
       core_subjects: strList(row["core_subjects"]),
       additional_skills: strList(row["additional_skills"]),
       certificates: strList(row["certificates"]),
-      projects: Array.isArray(row["projects"]) ? (row["projects"] as unknown[]) : [],
+      projects: Array.isArray(row["projects"])
+        ? (row["projects"] as { name: string; url: string }[])
+        : ([] as { name: string; url: string }[]),
       linkedin_url: str("linkedin_url") ?? "",
       additional_links: Array.isArray(row["additional_links"])
-        ? (row["additional_links"] as unknown[])
-        : [],
+        ? (row["additional_links"] as { label: string; url: string }[])
+        : ([] as { label: string; url: string }[]),
       target_role: str("target_role") ?? "",
       preferred_languages: preferred,
       course: str("course") ?? "",
