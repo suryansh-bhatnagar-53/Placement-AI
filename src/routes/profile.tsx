@@ -12,6 +12,8 @@ import {
   useAvatarUrl,
 } from "@/lib/avatar";
 import { getUserProfile, saveUserProfile } from "@/lib/user-profile.functions";
+import { IdentityCard } from "@/components/IdentityCard";
+import { LANGUAGES, ROLES } from "@/lib/onboarding-content";
 import { User, GraduationCap, Wrench, Briefcase, Plus, X, Check } from "lucide-react";
 
 export const Route = createFileRoute("/profile")({
@@ -51,6 +53,9 @@ type Form = {
   college: string;
   degree: string;
   specialization: string;
+  graduation_year: string;
+  target_role: string;
+  preferred_languages: string[];
   programming_languages: string[];
   core_subjects: string[];
   additional_skills: string[];
@@ -70,6 +75,9 @@ const EMPTY: Form = {
   college: "",
   degree: "",
   specialization: "",
+  graduation_year: "",
+  target_role: "",
+  preferred_languages: [],
   programming_languages: [],
   core_subjects: [],
   additional_skills: [],
@@ -90,8 +98,14 @@ type CategoryKey = (typeof CATEGORIES)[number]["key"];
 
 const FIELDS_BY_CATEGORY: Record<CategoryKey, (keyof Form)[]> = {
   personal: ["name", "avatar_url", "phone", "country", "state", "city"],
-  academic: ["college", "degree", "specialization"],
-  skills: ["programming_languages", "core_subjects", "additional_skills"],
+  academic: ["college", "degree", "specialization", "graduation_year"],
+  skills: [
+    "target_role",
+    "preferred_languages",
+    "programming_languages",
+    "core_subjects",
+    "additional_skills",
+  ],
   experience: ["certificates", "projects", "linkedin_url", "additional_links"],
 };
 
@@ -280,6 +294,9 @@ function ProfilePage() {
       college: p.college ?? "",
       degree: p.degree ?? "",
       specialization: p.specialization ?? "",
+      graduation_year: p.graduation_year ?? "",
+      target_role: p.target_role ?? "",
+      preferred_languages: strList(p.preferred_languages),
       programming_languages: strList(p.programming_languages),
       core_subjects: strList(p.core_subjects),
       additional_skills: strList(p.additional_skills),
@@ -352,6 +369,15 @@ function ProfilePage() {
       <p className="mt-1 text-sm text-muted-foreground">
         Add as much or as little as you like — everything here is optional.
       </p>
+
+      {data?.identity ? (
+        <IdentityCard
+          identity={data.identity}
+          photo={photo}
+          initials={initials}
+          name={form.name}
+        />
+      ) : null}
 
       <div className="mt-6 flex flex-col gap-6 md:flex-row">
         <nav className="flex gap-2 overflow-x-auto md:w-56 md:flex-col md:overflow-visible">
@@ -485,11 +511,75 @@ function ProfilePage() {
                     placeholder="Add your branch or specialization"
                     onChange={(v) => set("specialization", v)}
                   />
+                  <Field
+                    label="Finishing year"
+                    value={form.graduation_year}
+                    placeholder="Add the year you expect to finish"
+                    onChange={(v) => set("graduation_year", v)}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    We filled these in from your setup answers — change anything that's not right.
+                  </p>
                 </div>
               ) : null}
 
               {category === "skills" ? (
                 <div className="space-y-6">
+                  <div>
+                    <span className="text-sm text-muted-foreground">The job you're aiming for</span>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {ROLES.map((r) => (
+                        <button
+                          key={r.value}
+                          type="button"
+                          onClick={() => set("target_role", r.value)}
+                          aria-pressed={form.target_role === r.value}
+                          className={`rounded-md border px-3 py-2 text-sm transition-colors ${
+                            form.target_role === r.value
+                              ? "border-primary bg-primary/10 text-foreground"
+                              : "border-border text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          {r.title}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-sm text-muted-foreground">
+                      Language used in your practice interviews
+                    </span>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {LANGUAGES.map((l) => {
+                        const on = form.preferred_languages.includes(l.value);
+                        return (
+                          <button
+                            key={l.value}
+                            type="button"
+                            aria-pressed={on}
+                            onClick={() =>
+                              set(
+                                "preferred_languages",
+                                on
+                                  ? form.preferred_languages.filter((x) => x !== l.value)
+                                  : [...form.preferred_languages, l.value],
+                              )
+                            }
+                            className={`rounded-md border px-3 py-2 text-sm transition-colors ${
+                              on
+                                ? "border-primary bg-primary/10 text-foreground"
+                                : "border-border text-muted-foreground hover:text-foreground"
+                            }`}
+                          >
+                            {l.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Changing this updates your practice interviews straight away.
+                    </p>
+                  </div>
                   <ListEditor
                     label="Programming languages"
                     placeholder="Add a language, e.g. Python"
