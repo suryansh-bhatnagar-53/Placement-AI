@@ -47,7 +47,7 @@ const DetailsSchema = z
 export type ProfileDetails = z.infer<typeof DetailsSchema>;
 
 const COLUMNS =
-  "id, name, avatar_url, phone, country, state, city, college, degree, specialization, graduation_year, programming_languages, core_subjects, additional_skills, certificates, projects, linkedin_url, additional_links, target_role, preferred_languages, course, year_of_study, archetype, stat_adaptability, stat_resilience, stat_focus, onboarded_at";
+  "id, name, avatar_url, phone, country, state, city, college, degree, specialization, graduation_year, programming_languages, core_subjects, additional_skills, certificates, projects, linkedin_url, additional_links, target_role, preferred_languages, course, year_of_study, personality_answers, archetype, stat_adaptability, stat_resilience, stat_focus, onboarded_at";
 
 const strList = (v: unknown): string[] =>
   Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
