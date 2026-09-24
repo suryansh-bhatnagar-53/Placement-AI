@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BadgeInterviewRouteImport } from './routes/badge-interview'
 import { Route as CheatsheetRouteImport } from './routes/cheatsheet'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GuideRouteImport } from './routes/guide'
@@ -39,6 +40,11 @@ const ArchitectureRoute = ArchitectureRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BadgeInterviewRoute = BadgeInterviewRouteImport.update({
+  id: '/badge-interview',
+  path: '/badge-interview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheatsheetRoute = CheatsheetRouteImport.update({
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
   '/auth': typeof AuthRoute
+  '/badge-interview': typeof BadgeInterviewRoute
   '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
   '/auth': typeof AuthRoute
+  '/badge-interview': typeof BadgeInterviewRoute
   '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
   '/auth': typeof AuthRoute
+  '/badge-interview': typeof BadgeInterviewRoute
   '/cheatsheet': typeof CheatsheetRoute
   '/dashboard': typeof DashboardRoute
   '/guide': typeof GuideRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/architecture'
     | '/auth'
+    | '/badge-interview'
     | '/cheatsheet'
     | '/dashboard'
     | '/guide'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/architecture'
     | '/auth'
+    | '/badge-interview'
     | '/cheatsheet'
     | '/dashboard'
     | '/guide'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/architecture'
     | '/auth'
+    | '/badge-interview'
     | '/cheatsheet'
     | '/dashboard'
     | '/guide'
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArchitectureRoute: typeof ArchitectureRoute
   AuthRoute: typeof AuthRoute
+  BadgeInterviewRoute: typeof BadgeInterviewRoute
   CheatsheetRoute: typeof CheatsheetRoute
   DashboardRoute: typeof DashboardRoute
   GuideRoute: typeof GuideRoute
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/badge-interview': {
+      id: '/badge-interview'
+      path: '/badge-interview'
+      fullPath: '/badge-interview'
+      preLoaderRoute: typeof BadgeInterviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cheatsheet': {
@@ -359,6 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArchitectureRoute: ArchitectureRoute,
   AuthRoute: AuthRoute,
+  BadgeInterviewRoute: BadgeInterviewRoute,
   CheatsheetRoute: CheatsheetRoute,
   DashboardRoute: DashboardRoute,
   GuideRoute: GuideRoute,
