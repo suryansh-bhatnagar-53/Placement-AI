@@ -42,7 +42,7 @@ export const Route = createFileRoute("/badge-interview")({
 });
 
 type Stage = "intro" | "mcq" | "arrange" | "think" | "saving" | "result";
-type Result = { scores: TraitScores; top: Trait; isNew: boolean; earned: Trait[]; curious_mind: boolean };
+type Result = { scores: TraitScores; top: Trait | null; isNew: boolean; earned: Trait[]; curious_mind: boolean };
 
 const shuffleInit = () => ARRANGES.map((q) => q.steps.map((s) => s.id));
 
@@ -284,14 +284,25 @@ function BadgeInterviewPage() {
   }
 
   if (!result) return null;
-  const info = TRAIT_INFO[result.top];
+  const info = TRAIT_INFO[result.top ?? "resilience"];
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <section className="rounded-xl border border-border bg-card p-6 text-center">
         <div className="flex justify-center">
-          <BadgeLogo kind={result.top} size={96} title={`${info.label} — ${info.meaning}`} />
+          {result.top ? (
+            <BadgeLogo kind={result.top} size={96} title={`${info.label} — ${info.meaning}`} />
+          ) : (
+            <BadgeLogo kind="resilience" earned={false} size={96} title="No badge this time" />
+          )}
         </div>
-        {result.isNew ? (
+        {!result.top ? (
+          <>
+            <p className="mt-4 text-xl font-semibold">No badge this time</p>
+            <p className="mt-1 text-muted-foreground">
+              Too many situations were skipped to show a strength. Give it another go — every attempt counts.
+            </p>
+          </>
+        ) : result.isNew ? (
           <>
             <p className="mt-4 text-xl font-semibold">New badge unlocked!</p>
             <p className="mt-1 text-muted-foreground">

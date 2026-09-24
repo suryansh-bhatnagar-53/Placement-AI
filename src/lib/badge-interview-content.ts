@@ -334,6 +334,8 @@ export function scoreSubmission(s: Submission) {
   const scores = empty();
   for (const t of TRAITS) scores[t] = Math.max(0, Math.min(100, Math.round((raw[t] / TRAIT_MAX[t]) * 100)));
   // Highest wins; ties resolved by fixed trait order.
-  const top = TRAITS.reduce((best, t) => (scores[t] > scores[best] ? t : best), TRAITS[0]);
+  const best = TRAITS.reduce((b, t) => (scores[t] > scores[b] ? t : b), TRAITS[0]);
+  // If nothing scored at all (e.g. everything skipped), no badge is earned this time.
+  const top: Trait | null = scores[best] > 0 ? best : null;
   return { scores, top, skipped };
 }

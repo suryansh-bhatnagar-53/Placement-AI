@@ -37,8 +37,8 @@ export const submitBadgeInterview = createServerFn({ method: "POST" })
       .eq("user_id", context.userId)
       .maybeSingle();
     const earned = new Set(((row?.earned as string[] | null) ?? []) as string[]);
-    const isNew = !earned.has(top);
-    earned.add(top);
+    const isNew = top !== null && !earned.has(top);
+    if (top) earned.add(top);
     const best = { ...((row?.best_scores as Record<string, number> | null) ?? {}) };
     for (const t of TRAITS) best[t] = Math.max(best[t] ?? 0, scores[t]);
     const earnedList = TRAITS.filter((t) => earned.has(t));
@@ -55,7 +55,7 @@ export const submitBadgeInterview = createServerFn({ method: "POST" })
     await supabaseAdmin.from("badge_attempts").insert({
       user_id: context.userId,
       scores,
-      top_trait: top,
+      top_trait: top ?? "none",
       newly_earned: isNew,
       skipped_count: skipped,
     });
