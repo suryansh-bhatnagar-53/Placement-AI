@@ -276,6 +276,8 @@ function ProfilePage() {
   const save = useServerFn(saveUserProfile);
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["user-profile"], queryFn: () => load() });
+  const loadBadges = useServerFn(getMyBadges);
+  const { data: badgeData } = useQuery({ queryKey: ["my-badges"], queryFn: () => loadBadges() });
 
   const [category, setCategory] = useState<CategoryKey>("personal");
   const [form, setForm] = useState<Form>(EMPTY);
