@@ -113,6 +113,36 @@ export type Database = {
         }
         Relationships: []
       }
+      badge_attempts: {
+        Row: {
+          created_at: string
+          id: string
+          newly_earned: boolean
+          scores: Json
+          skipped_count: number
+          top_trait: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          newly_earned?: boolean
+          scores?: Json
+          skipped_count?: number
+          top_trait: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          newly_earned?: boolean
+          scores?: Json
+          skipped_count?: number
+          top_trait?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string
@@ -482,6 +512,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_badges: {
+        Row: {
+          best_scores: Json
+          curious_mind: boolean
+          earned: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          best_scores?: Json
+          curious_mind?: boolean
+          earned?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          best_scores?: Json
+          curious_mind?: boolean
+          earned?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {
