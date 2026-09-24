@@ -1,4 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { BadgeShelf, CuriousMindMark } from "@/components/TraitBadge";
+import { getMyBadges } from "@/lib/badges.functions";
+import type { Trait } from "@/lib/badge-interview-content";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -273,6 +276,8 @@ function ProfilePage() {
   const save = useServerFn(saveUserProfile);
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["user-profile"], queryFn: () => load() });
+  const loadBadges = useServerFn(getMyBadges);
+  const { data: badgeData } = useQuery({ queryKey: ["my-badges"], queryFn: () => loadBadges() });
 
   const [category, setCategory] = useState<CategoryKey>("personal");
   const [form, setForm] = useState<Form>(EMPTY);
@@ -376,8 +381,28 @@ function ProfilePage() {
           photo={photo}
           initials={initials}
           name={form.name}
+          nameAddon={<CuriousMindMark unlocked={Boolean(badgeData?.curious_mind)} />}
         />
       ) : null}
+
+      <section className="mt-4 rounded-lg border border-border bg-card p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="font-medium">Trait badges</h2>
+            <p className="text-sm text-muted-foreground">
+              {(badgeData?.earned.length ?? 0) === 5
+                ? "All five earned — you've unlocked the Curious Mind badge."
+                : "Earn all 5 badges to unlock the Curious Mind badge."}
+            </p>
+          </div>
+          <Link to="/badge-interview" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
+            Take a Badge Interview
+          </Link>
+        </div>
+        <div className="mt-4">
+          <BadgeShelf earned={(badgeData?.earned ?? []) as Trait[]} />
+        </div>
+      </section>
 
       <div className="mt-6 flex flex-col gap-6 md:flex-row">
         <nav className="flex gap-2 overflow-x-auto md:w-56 md:flex-col md:overflow-visible">

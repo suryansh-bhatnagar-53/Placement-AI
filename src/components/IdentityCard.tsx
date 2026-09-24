@@ -47,11 +47,13 @@ export function IdentityCard({
   photo,
   initials,
   name,
+  nameAddon,
 }: {
   identity: Identity;
   photo: string | null;
   initials: string;
   name: string;
+  nameAddon?: React.ReactNode;
 }) {
   return (
     <section className="mt-6 rounded-lg border border-border bg-card p-5">
@@ -65,7 +67,7 @@ export function IdentityCard({
             )}
           </div>
           <div>
-            <p className="text-base font-semibold">{name || "Your profile"}</p>
+            <p className="flex items-center gap-1.5 text-base font-semibold">{name || "Your profile"}{nameAddon}</p>
             <span className="mt-1 inline-flex rounded-full bg-primary/15 px-3 py-1 text-sm font-medium text-primary">
               {identity.archetype}
             </span>

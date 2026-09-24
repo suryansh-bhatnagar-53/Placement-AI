@@ -19,6 +19,12 @@
  */
 
 @theme inline {
+  --color-badge-adaptability: var(--badge-adaptability);
+  --color-badge-resilience: var(--badge-resilience);
+  --color-badge-leadership: var(--badge-leadership);
+  --color-badge-collaboration: var(--badge-collaboration);
+  --color-badge-critical: var(--badge-critical);
+  --color-badge-curious: var(--badge-curious);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -65,6 +71,12 @@
 }
 
 :root {
+  --badge-adaptability: oklch(0.72 0.17 150);
+  --badge-resilience: oklch(0.68 0.2 35);
+  --badge-leadership: oklch(0.66 0.16 255);
+  --badge-collaboration: oklch(0.7 0.16 320);
+  --badge-critical: oklch(0.8 0.15 85);
+  --badge-curious: oklch(0.75 0.14 200);
   --radius: 0.5rem;
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
