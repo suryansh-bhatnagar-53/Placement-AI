@@ -5,20 +5,22 @@ import { useAuth } from "@/hooks/useAuth";
 import { GraduationCap, LogOut } from "lucide-react";
 import { ModulePageGuide } from "@/components/ModulePageGuide";
 import { getModuleGuideKey } from "@/lib/module-guide-content";
+import { useI18n } from "@/i18n/I18nProvider";
 import { ProfileAvatarButton } from "@/components/ProfileAvatarButton";
 
 const NAV = [
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/interview/setup", label: "Interview" },
-  { to: "/resume", label: "Resume" },
-  { to: "/guide", label: "AI Guide" },
-  { to: "/performance", label: "Performance" },
-  { to: "/roadmap", label: "Roadmap" },
-  { to: "/cheatsheet", label: "Cheat Sheet" },
+  { to: "/dashboard", label: "nav.dashboard" },
+  { to: "/interview/setup", label: "nav.interview" },
+  { to: "/resume", label: "nav.resume" },
+  { to: "/guide", label: "nav.guide" },
+  { to: "/performance", label: "nav.performance" },
+  { to: "/roadmap", label: "nav.roadmap" },
+  { to: "/cheatsheet", label: "nav.cheatsheet" },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { session, loading } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const moduleGuideKey = getModuleGuideKey(pathname);
@@ -30,7 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   if (loading || !session) {
     return (
       <div className="flex min-h-screen items-center justify-center text-muted-foreground">
-        Loading…
+        {t("shell.loading")}
       </div>
     );
   }
@@ -56,7 +58,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {item.label}
+                  {t(item.label)}
                 </Link>
               );
             })}
@@ -69,7 +71,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             }}
             className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <LogOut className="h-4 w-4" /> Sign out
+            <LogOut className="h-4 w-4" /> {t("shell.signOut")}
           </button>
         </div>
       </header>

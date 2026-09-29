@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useI18n } from "@/i18n/I18nProvider";
 import { GraduationCap, Mic, FileText, Compass } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -23,22 +24,23 @@ export const Route = createFileRoute("/")({
 const FEATURES = [
   {
     icon: Mic,
-    title: "Practice Interviews",
-    body: "Timed mock rounds in C, C++, Python and Java plus DSA, DBMS and OS theory — scored on technical accuracy, communication, completeness and confidence.",
+    title: "land.f1.title",
+    body: "land.f1.body", _b: "Timed mock rounds in C, C++, Python and Java plus DSA, DBMS and OS theory — scored on technical accuracy, communication, completeness and confidence.",
   },
   {
     icon: FileText,
-    title: "Resume ATS Check",
-    body: "Upload your PDF resume and get a 0–100 ATS score with a factor-by-factor breakdown and prioritised fixes.",
+    title: "land.f2.title",
+    body: "land.f2.body", _b: "Upload your PDF resume and get a 0–100 ATS score with a factor-by-factor breakdown and prioritised fixes.",
   },
   {
     icon: Compass,
-    title: "AI Guide & Roadmap",
-    body: "Your weak topics become a ranked roadmap with practice questions, and the AI Guide answers prep questions in context.",
+    title: "land.f3.title",
+    body: "land.f3.body", _b: "Your weak topics become a ranked roadmap with practice questions, and the AI Guide answers prep questions in context.",
   },
 ];
 
 function Landing() {
+  const { t } = useI18n();
   return (
     <div className="min-h-screen bg-background">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5">
@@ -51,39 +53,37 @@ function Landing() {
           search={{ mode: "login" }}
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          Sign in
+          {t("land.signIn")}
         </Link>
       </header>
 
       <section className="mx-auto max-w-3xl px-4 pt-16 pb-14 text-center sm:pt-24">
-        <p className="text-xs uppercase tracking-[0.2em] text-primary">Smart India Hackathon 2026</p>
-        <h1 className="mt-4 text-4xl font-semibold sm:text-6xl">Your AI Placement Mentor</h1>
+        <p className="text-xs uppercase tracking-[0.2em] text-primary">{t("land.eyebrow")}</p>
+        <h1 className="mt-4 text-4xl font-semibold sm:text-6xl">{t("land.title")}</h1>
         <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-          Stop guessing where you stand. PlacementAI runs realistic timed interviews, grades every
-          answer against a strict rubric, and turns your weak spots into a study plan you can
-          actually follow.
+          {t("land.lead")}
         </p>
         <Link
           to="/auth"
           search={{ mode: "register" }}
           className="mt-8 inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground transition-opacity hover:opacity-90"
         >
-          Get Started
+          {t("land.cta")}
         </Link>
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-4 px-4 pb-20 sm:grid-cols-3">
         {FEATURES.map((feature) => (
-          <article key={feature.title} className="rounded-lg border border-border bg-card p-6">
+          <article key={t(feature.title)} className="rounded-lg border border-border bg-card p-6">
             <feature.icon className="h-6 w-6 text-accent" />
-            <h2 className="mt-4 text-lg font-semibold">{feature.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.body}</p>
+            <h2 className="mt-4 text-lg font-semibold">{t(feature.title)}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(feature.body)}</p>
           </article>
         ))}
       </section>
 
       <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
-        Built for SIH 2026 · PS 26207
+        {t("land.footer")}
       </footer>
     </div>
   );

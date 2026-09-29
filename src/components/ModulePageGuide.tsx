@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { ChevronLeft, ChevronRight, FileQuestion } from "lucide-react";
+import { useI18n } from "@/i18n/I18nProvider";
 import { MODULE_GUIDES, type ModuleGuideKey } from "@/lib/module-guide-content";
 
 export function ModulePageGuide({
@@ -10,6 +11,8 @@ export function ModulePageGuide({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
+  const k = `mg.m.${moduleKey}`;
   const guide = MODULE_GUIDES[moduleKey];
   const isFade = guide.behavior === "fade";
 
@@ -28,7 +31,7 @@ export function ModulePageGuide({
       <div className="module-guide-icon group">
         <button
           type="button"
-          aria-label={open ? "Close module guide" : "Open module guide"}
+          aria-label={open ? t("mg.close") : t("mg.open")}
           aria-expanded={open}
           aria-controls={`module-guide-${moduleKey}`}
           onClick={() => setOpen((value) => !value)}
@@ -40,13 +43,13 @@ export function ModulePageGuide({
           role="tooltip"
           className="pointer-events-none absolute right-0 top-full mt-2 w-max max-w-52 rounded-md border border-border bg-popover px-2.5 py-1.5 text-xs text-popover-foreground opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
         >
-          Need help with this module?
+          {t("mg.tooltip")}
         </span>
       </div>
 
       <aside
         id={`module-guide-${moduleKey}`}
-        aria-label={`${guide.title} guide`}
+        aria-label={t("mg.panelLabel", { title: t(`${k}.title`) })}
         aria-hidden={!open}
         className="module-guide-panel"
       >
@@ -54,40 +57,40 @@ export function ModulePageGuide({
           <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3 border-b border-border pb-5">
             <button
               type="button"
-              aria-label="Close module guide"
+              aria-label={t("mg.close")}
               onClick={() => setOpen(false)}
               className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
             <div className="min-w-0">
-              <p className="text-xs font-medium uppercase text-primary">Module guide</p>
-              <h2 className="mt-1 text-lg font-semibold">{guide.title}</h2>
+              <p className="text-xs font-medium uppercase text-primary">{t("mg.label")}</p>
+              <h2 className="mt-1 text-lg font-semibold">{t(`${k}.title`)}</h2>
             </div>
           </div>
 
           <div className="space-y-7 py-6">
-            <GuideSection title="What this is for">
-              <p>{guide.purpose}</p>
+            <GuideSection title={t("mg.what")}>
+              <p>{t(`${k}.purpose`)}</p>
             </GuideSection>
-            <GuideSection title="How to use it">
+            <GuideSection title={t("mg.how")}>
               <ol className="space-y-3">
                 {guide.steps.map((step, index) => (
-                  <li key={step} className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2">
+                  <li key={index} className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-xs font-semibold text-primary">
                       {index + 1}
                     </span>
-                    <span>{step}</span>
+                    <span>{t(`${k}.step${index}`)}</span>
                   </li>
                 ))}
               </ol>
             </GuideSection>
-            <GuideSection title="Why it helps you">
+            <GuideSection title={t("mg.why")}>
               <ul className="space-y-3">
-                {guide.benefits.map((benefit) => (
-                  <li key={benefit} className="grid grid-cols-[1rem_minmax(0,1fr)] gap-2">
+                {guide.benefits.map((_b, bi) => (
+                  <li key={bi} className="grid grid-cols-[1rem_minmax(0,1fr)] gap-2">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent" />
-                    <span>{benefit}</span>
+                    <span>{t(`${k}.benefit${bi}`)}</span>
                   </li>
                 ))}
               </ul>
@@ -99,7 +102,7 @@ export function ModulePageGuide({
       {!open ? (
         <button
           type="button"
-          aria-label="Open module guide"
+          aria-label={t("mg.open")}
           onClick={() => setOpen(true)}
           className="module-guide-edge-toggle"
         >
