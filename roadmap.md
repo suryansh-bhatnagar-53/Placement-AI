@@ -4,3 +4,8 @@
 - [x] Integrate shift behavior into Interview, Resume, and AI Guide
 - [x] Integrate fade behavior into Performance, Roadmap, and Cheat Sheet
 - [x] Verify desktop, mobile, typecheck, and existing tests
+
+## Multi-language interface
+- [x] Language system, always-visible picker, saved choice, Indian-script fonts
+- [x] Translate header, dashboard, landing, tour, tour popup, in-module guides
+- [ ] Translate onboarding, profile, badge interview, sign-in, and inner module screens (next pass)
