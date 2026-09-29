@@ -78,8 +78,9 @@
   --badge-critical: oklch(0.8 0.15 85);
   --badge-curious: oklch(0.75 0.14 200);
   --radius: 0.5rem;
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-indic: "Noto Sans Devanagari", "Noto Sans Bengali", "Noto Sans Tamil", "Noto Sans Telugu";
+  --font-display: "Sora", var(--font-indic), ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", var(--font-indic), ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --background: oklch(0.17 0.019 258);

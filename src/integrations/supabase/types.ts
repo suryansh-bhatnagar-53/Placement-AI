@@ -242,6 +242,7 @@ export type Database = {
           target_role: string | null
           tour_completed: boolean
           tour_prompted: boolean
+          ui_language: string
           year_of_study: string | null
         }
         Insert: {
@@ -276,6 +277,7 @@ export type Database = {
           target_role?: string | null
           tour_completed?: boolean
           tour_prompted?: boolean
+          ui_language?: string
           year_of_study?: string | null
         }
         Update: {
@@ -310,6 +312,7 @@ export type Database = {
           target_role?: string | null
           tour_completed?: boolean
           tour_prompted?: boolean
+          ui_language?: string
           year_of_study?: string | null
         }
         Relationships: []
