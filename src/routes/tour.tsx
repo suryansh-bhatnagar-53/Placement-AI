@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { TOUR_MODULES, type TourModule } from "@/lib/tour-content";
+import { useI18n } from "@/i18n/I18nProvider";
 import { setTourState } from "@/lib/tour.functions";
 import {
   ChevronLeft,
@@ -91,6 +92,7 @@ function Preview({ kind }: { kind: TourModule["preview"] }) {
 function Tour() {
   const navigate = useNavigate();
   const save = useServerFn(setTourState);
+  const { t } = useI18n();
   const [index, setIndex] = useState(0);
   const module = TOUR_MODULES[index]!;
   const isLast = index === TOUR_MODULES.length - 1;
@@ -104,14 +106,14 @@ function Tour() {
     <div className="mx-auto max-w-2xl">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">
-          {index + 1} of {TOUR_MODULES.length}
+          {t("tour.progress", { current: index + 1, total: TOUR_MODULES.length })}
         </p>
         <button
           type="button"
           onClick={() => void leave(false)}
           className="rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          Skip tour
+          {t("tour.skip")}
         </button>
       </div>
 
@@ -125,25 +127,25 @@ function Tour() {
       </div>
 
       <div className="mt-6 rounded-lg border border-border bg-card p-6">
-        <h1 className="text-xl font-semibold">{module.title}</h1>
+        <h1 className="text-xl font-semibold">{t(`tour.m.${module.id}.title`)}</h1>
         <div className="mt-4">
           <Preview kind={module.preview} />
         </div>
-        <p className="mt-5 text-sm">{module.use}</p>
-        <h2 className="mt-5 text-sm font-medium text-muted-foreground">You can:</h2>
+        <p className="mt-5 text-sm">{t(`tour.m.${module.id}.use`)}</p>
+        <h2 className="mt-5 text-sm font-medium text-muted-foreground">{t("tour.youCan")}</h2>
         <ul className="mt-2 space-y-1.5 text-sm">
-          {module.canDo.map((item) => (
-            <li key={item} className="flex gap-2">
+          {module.canDo.map((_item, ci) => (
+            <li key={ci} className="flex gap-2">
               <span className="text-accent">•</span>
-              <span>{item}</span>
+              <span>{t(`tour.m.${module.id}.can${ci}`)}</span>
             </li>
           ))}
         </ul>
         <div className="mt-5 flex gap-2 rounded-md bg-secondary p-3 text-sm">
           <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
           <p>
-            <span className="font-medium">{module.faq.q}</span>{" "}
-            <span className="text-muted-foreground">{module.faq.a}</span>
+            <span className="font-medium">{t(`tour.m.${module.id}.q`)}</span>{" "}
+            <span className="text-muted-foreground">{t(`tour.m.${module.id}.a`)}</span>
           </p>
         </div>
       </div>
@@ -151,12 +153,12 @@ function Tour() {
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
         <button
           type="button"
-          aria-label="Previous section"
+          aria-label={t("tour.prevAria")}
           disabled={index === 0}
           onClick={() => setIndex((i) => Math.max(0, i - 1))}
           className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-sm disabled:opacity-40"
         >
-          <ChevronLeft className="h-4 w-4" /> Back
+          <ChevronLeft className="h-4 w-4" /> {t("tour.back")}
         </button>
 
         {isLast ? (
@@ -165,7 +167,7 @@ function Tour() {
             onClick={() => void leave(true)}
             className="rounded-md bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground"
           >
-            Finish — take me to the dashboard
+            {t("tour.finishLast")}
           </button>
         ) : (
           <div className="flex gap-2">
@@ -174,15 +176,15 @@ function Tour() {
               onClick={() => void leave(true)}
               className="rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              Finish
+              {t("tour.finish")}
             </button>
             <button
               type="button"
-              aria-label="Next section"
+              aria-label={t("tour.nextAria")}
               onClick={() => setIndex((i) => Math.min(TOUR_MODULES.length - 1, i + 1))}
               className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
             >
-              Next <ChevronRight className="h-4 w-4" />
+              {t("tour.next")} <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         )}

@@ -3,10 +3,12 @@ import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { getTourState, setTourState } from "@/lib/tour.functions";
+import { useI18n } from "@/i18n/I18nProvider";
 import { Lightbulb, X } from "lucide-react";
 
 export function TourLauncher() {
   const navigate = useNavigate();
+  const { t } = useI18n();
   const load = useServerFn(getTourState);
   const save = useServerFn(setTourState);
   const { data } = useQuery({ queryKey: ["tour-state"], queryFn: () => load() });
@@ -30,7 +32,7 @@ export function TourLauncher() {
     return (
       <button
         type="button"
-        aria-label="Open the quick tour"
+        aria-label={t("launcher.openTour")}
         onClick={() => setMode("dialog")}
         className="fixed bottom-5 right-5 z-40 rounded-full border border-border bg-card p-3 opacity-40 shadow-lg transition-opacity hover:opacity-100 focus-visible:opacity-100"
       >
@@ -43,21 +45,20 @@ export function TourLauncher() {
     <div
       role="dialog"
       aria-modal="false"
-      aria-label="New here? Want a quick tour?"
+      aria-label={t("launcher.title")}
       className="fixed bottom-5 right-5 z-40 w-[min(22rem,calc(100vw-2.5rem))] rounded-lg border border-primary/40 bg-card p-4 shadow-xl"
     >
       <div className="flex items-start gap-2">
         <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
         <div className="flex-1">
-          <h2 className="text-sm font-semibold">New here? Want a quick tour?</h2>
+          <h2 className="text-sm font-semibold">{t("launcher.title")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Let us walk you through what each section does — 30 seconds, plain language, no
-            jargon. Sound good?
+            {t("launcher.body")}
           </p>
         </div>
         <button
           type="button"
-          aria-label="Close"
+          aria-label={t("launcher.close")}
           onClick={() => {
             void save({ data: { tour_prompted: true } });
             setMode("bulb");
@@ -76,7 +77,7 @@ export function TourLauncher() {
           }}
           className="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
         >
-          Yes, please
+          {t("launcher.yes")}
         </button>
         <button
           type="button"
@@ -87,7 +88,7 @@ export function TourLauncher() {
           }}
           className="rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          No, thanks
+          {t("launcher.no")}
         </button>
       </div>
     </div>

@@ -8,3 +8,4 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+- UI text goes through `useI18n().t(key, vars)` (src/i18n); English in `locales/en.ts` is the fallback, other languages are partial dictionaries. Why: add or fix a language without touching component logic.
