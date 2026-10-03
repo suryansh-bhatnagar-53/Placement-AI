@@ -4,10 +4,25 @@ import type { Database } from "@/integrations/supabase/types";
 import { SCORE_WEIGHTS } from "./judging.server";
 
 export type Sb = SupabaseClient<Database>;
-export type Role = "SE" | "ML" | "DA";
-export type RoundType = "coding" | "writing";
+export type Role = "SE" | "ML" | "DA" | "PM" | "BA" | "CE";
+export type RoundType = "coding" | "writing" | "case_study" | "behavioral" | "domain_quiz";
 
 export const TIMER_SECONDS = 120;
+/** Per-round timer in seconds; coding and writing keep the original 120 s. */
+export const ROUND_TIMERS: Record<RoundType, number> = {
+  coding: 120,
+  writing: 120,
+  case_study: 180,
+  behavioral: 120,
+  domain_quiz: 30,
+};
+export const ROUND_COUNTS: Record<RoundType, number> = {
+  coding: 5,
+  writing: 6,
+  case_study: 3,
+  behavioral: 5,
+  domain_quiz: 10,
+};
 export const CODING_QUESTION_COUNT = 5;
 export const WRITING_QUESTION_COUNT = 6;
 
@@ -18,6 +33,9 @@ const TOPIC_WEIGHTS: Record<Role, Record<string, number>> = {
   SE: { dsa: 3, os: 2, dbms: 1 },
   ML: { dsa: 3, os: 2, dbms: 1 },
   DA: { dbms: 4, dsa: 1, os: 1 },
+  CE: { os: 3, dsa: 2, dbms: 1 },
+  PM: { dbms: 2, dsa: 1, os: 1 },
+  BA: { dbms: 3, dsa: 1, os: 1 },
 };
 
 function shuffle<T>(items: T[]): T[] {
@@ -37,6 +55,15 @@ export async function pickQuestions(
   languages: string[],
   roundType: RoundType,
 ): Promise<BankQuestion[]> {
+  if (roundType === "case_study" || roundType === "behavioral" || roundType === "domain_quiz") {
+    const wantedNew = ROUND_COUNTS[roundType];
+    const dbType = roundType === "domain_quiz" ? "mcq" : roundType;
+    let query = supabase.from("questions").select("*").eq("type", dbType);
+    query = roundType === "behavioral" ? query.eq("role", "all") : query.eq("role", role);
+    const { data, error } = await query;
+    if (error) throw new Error(error.message);
+    return shuffle((data ?? []) as BankQuestion[]).slice(0, wantedNew);
+  }
   const wanted = roundType === "coding" ? CODING_QUESTION_COUNT : WRITING_QUESTION_COUNT;
   const type = roundType === "coding" ? "coding" : "theory";
 
@@ -136,6 +163,22 @@ export const TOPIC_LABELS: Record<string, string> = {
   dsa: "Data Structures & Algorithms",
   dbms: "Database Management",
   os: "Operating Systems",
+  ml: "ML Concepts",
+  statistics: "Statistics",
+  sql: "SQL",
+  product: "Product Strategy",
+  ux: "UX / User Research",
+  agile: "Agile Methodologies",
+  metrics: "Product Metrics",
+  process: "Business Process Modeling",
+  data_interp: "Data Interpretation",
+  excel: "Excel / Analytics",
+  requirements: "Requirements Gathering",
+  cloud: "Cloud Architecture",
+  networking: "Networking",
+  devops: "DevOps",
+  security: "Security Basics",
+  behavioral: "Behavioral / HR",
 };
 
 const TOPIC_RESOURCES: Record<string, string[]> = {
