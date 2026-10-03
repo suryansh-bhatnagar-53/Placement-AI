@@ -167,6 +167,36 @@ export type Database = {
         }
         Relationships: []
       }
+      interview_role_config: {
+        Row: {
+          description: string
+          role: string
+          rounds: Json
+          sort_order: number
+          title: string
+          updated_at: string
+          uses_code: boolean
+        }
+        Insert: {
+          description: string
+          role: string
+          rounds: Json
+          sort_order?: number
+          title: string
+          updated_at?: string
+          uses_code?: boolean
+        }
+        Update: {
+          description?: string
+          role?: string
+          rounds?: Json
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          uses_code?: boolean
+        }
+        Relationships: []
+      }
       performance_snapshots: {
         Row: {
           ats_last_score: number | null
