@@ -319,10 +319,12 @@ export type Database = {
       }
       questions: {
         Row: {
+          correct_option: number | null
           created_at: string
           difficulty: string
           id: number
           language: string
+          options: Json | null
           role: string
           sample_answer: string
           source: string
@@ -332,10 +334,12 @@ export type Database = {
           type: string
         }
         Insert: {
+          correct_option?: number | null
           created_at?: string
           difficulty: string
           id?: number
           language?: string
+          options?: Json | null
           role?: string
           sample_answer: string
           source: string
@@ -345,10 +349,12 @@ export type Database = {
           type: string
         }
         Update: {
+          correct_option?: number | null
           created_at?: string
           difficulty?: string
           id?: number
           language?: string
+          options?: Json | null
           role?: string
           sample_answer?: string
           source?: string

@@ -1,0 +1,10 @@
+ALTER TABLE public.questions DROP CONSTRAINT IF EXISTS questions_topic_check;
+ALTER TABLE public.questions DROP CONSTRAINT IF EXISTS questions_type_check;
+ALTER TABLE public.questions DROP CONSTRAINT IF EXISTS questions_role_check;
+ALTER TABLE public.questions ADD CONSTRAINT questions_topic_check CHECK (topic IN ('basic','dsa','dbms','os','ml','statistics','sql','product','ux','agile','metrics','process','data_interp','excel','requirements','cloud','networking','devops','security','behavioral'));
+ALTER TABLE public.questions ADD CONSTRAINT questions_type_check CHECK (type IN ('coding','theory','case_study','behavioral','mcq'));
+ALTER TABLE public.questions ADD CONSTRAINT questions_role_check CHECK (role IN ('SE','ML','DA','PM','BA','CE','all'));
+ALTER TABLE public.questions ADD COLUMN IF NOT EXISTS options jsonb;
+ALTER TABLE public.questions ADD COLUMN IF NOT EXISTS correct_option integer;
+ALTER TABLE public.sessions DROP CONSTRAINT IF EXISTS sessions_round_type_check;
+ALTER TABLE public.sessions ADD CONSTRAINT sessions_round_type_check CHECK (round_type IN ('coding','writing','case_study','behavioral','domain_quiz'));
